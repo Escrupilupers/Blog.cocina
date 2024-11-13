@@ -1,0 +1,106 @@
+.custom-links a {
+    color: white; /* Color de las letras */
+    text-decoration: none; /* Sin subrayado por defecto */
+    position: relative; /* Necesario para la barra inferior */
+}
+
+.custom-links a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px; /* Grosor de la barra */
+    left: 0;
+    bottom: -5px; /* Ajusta la posición de la barra */
+    background-color: white; /* Color de la barra */
+    transition: width 0.3s ease; /* Efecto de transición al hacer hover */
+}
+
+.custom-links a:hover::after {
+    width: 100%; /* La barra se extiende cuando pasas el cursor */
+}
+.turquoise-box {
+    background-color: #e08040; /* Color turquesa */
+    padding: 20px;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+}
+
+.icon-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* Ajusta según el tamaño del icono */
+}
+.text-center {
+    text-align: center;
+}
+/* styles.css */
+
+/* Estilo para las imágenes en la sección de Últimas Recetas */
+.img-fluid {
+    width: 100%; /* Las imágenes ocuparán todo el ancho del contenedor */
+    height: 200px; /* Altura fija para todas las imágenes */
+    object-fit: cover; /* Mantiene la proporción y recorta el exceso */
+    border-radius: 8px; /* Esquinas redondeadas (opcional) */
+}
+
+.text-center p {
+    margin-top: 10px; /* Espacio entre la imagen y la descripción */
+    font-size: 16px; /* Tamaño de fuente para la descripción */
+}
+.card-img-top {
+    width: 100%; /* Las imágenes ocuparán todo el ancho del contenedor */
+    height: 200px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Mantiene la proporción y recorta el exceso */
+    border-radius: 8px; /* Esquinas redondeadas (opcional) */
+}
+/* Estilo general para las imágenes */
+.img-fluid {
+    max-width: 100%; /* Asegura que las imágenes no excedan el contenedor */
+    height: auto; /* Mantiene la proporción de las imágenes */
+}
+
+/* Estilo específico para la sección de Cocina Culinaria */
+.cocina-culinaria .row {
+    margin-top: 20px; /* Espacio entre el texto y las imágenes */
+}
+
+.cocina-culinaria img {
+    width: 100%; /* Las imágenes ocupan todo el ancho de su contenedor */
+    height: 200px; /* Altura fija para uniformidad */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+}
+
+.text-center {
+    margin-bottom: 20px; /* Espacio debajo de cada imagen */
+}
+
+/* Alineación específica de las imágenes */
+.cocina-culinaria .col-md-4:nth-child(2) {
+    align-self: center; /* Centra la imagen del medio */
+}
+
+/* Clearfix para el float del título */
+.clear-both {
+    clear: both;
+}
+.suscripcion {
+    background-color: #ff6f61;
+    border-radius: 15px;
+    margin: 40px 0;
+}
+
+.suscripcion h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.suscripcion p {
+    font-size: 1.2rem;
+}
+
+/* Estilos del footer */
+.social-icons img {
+    width: 24px;
+    margin: 0 10px;
+}

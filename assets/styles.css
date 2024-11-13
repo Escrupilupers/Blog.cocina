@@ -1,0 +1,59 @@
+/* Estilos de los enlaces de navegación */
+.custom-links a {
+    color: white; /* Color de las letras */
+    text-decoration: none; /* Sin subrayado por defecto */
+    position: relative; /* Necesario para la barra inferior */
+}
+
+.custom-links a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px; /* Grosor de la barra */
+    left: 0;
+    bottom: -5px; /* Ajusta la posición de la barra */
+    background-color: white; /* Color de la barra */
+    transition: width 0.3s ease; /* Efecto de transición al hacer hover */
+}
+
+.custom-links a:hover::after {
+    width: 100%; /* La barra se extiende cuando pasas el cursor */
+}
+
+/* Galería de imágenes superpuestas */
+.image-gallery {
+    position: absolute;
+    top: 70%; /* Ajusta esta medida según necesites */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; /* Para que quede sobre los contenedores */
+}
+
+.image-gallery img {
+    width: 150px;
+    height: 150px;
+    margin: 0 10px;
+    border-radius: 10px;
+}
+
+/* Estilos para las recetas en tendencia */
+.trend-recipes img {
+    margin: 0 5px;
+}
+
+/* Estilos del footer */
+.social-icons img {
+    width: 24px;
+    margin: 0 10px;
+}
+
+/* Estilos para las máscaras grises */
+.mask-gray {
+    background-color: rgba(128, 128, 128, 0.6); /* Gris con 60% de transparencia */
+}
+
+/* Estilos del footer */
+.social-icons img {
+    width: 24px;
+    margin: 0 10px;
+}

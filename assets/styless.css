@@ -1,0 +1,79 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilos del hero section */
+.hero {
+    padding: 100px 0;
+    background-color: #f8f9fa;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    margin-right: 15px;
+    font-size: 1.1rem;
+}
+
+.btn-warning {
+    background-color: #ffcc00;
+    color: #000;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e6b800;
+}
+
+.container img {
+    border-radius: 10px;
+}
+
+/* Ajuste del margen en las imágenes */
+img {
+    margin-bottom: 15px;
+}
+
+/* Estilos para la sección de suscripción */
+.suscripcion {
+    background-color: #ff6f61;
+    border-radius: 15px;
+    margin: 40px 0;
+}
+
+.suscripcion h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.suscripcion p {
+    font-size: 1.2rem;
+}
+
+/* Estilos del footer */
+.social-icons img {
+    width: 24px;
+    margin: 0 10px;
+}

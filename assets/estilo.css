@@ -1,0 +1,61 @@
+/* Estilos de la barra de navegación */
+.navbar {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    margin-right: 15px;
+    font-size: 1.1rem;
+}
+
+.btn-warning {
+    background-color: #ffcc00;
+    color: #000;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e6b800;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Recetas populares */
+.row {
+    margin-bottom: 30px;
+}
+
+.card img {
+    border-radius: 10px;
+}
+
+/* Estilos para la sección "Nutriendo cada paladar" */
+.bg-light {
+    background-color: #e0f7fa;
+    padding: 20px;
+    border-radius: 10px;
+}
