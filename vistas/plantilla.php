@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="../assets/librerias/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="C:\xampp\htdocs\blog.cocina\assets\style.css">
 </head>
+<?php require "../config/Conexion.php";
+$query="select * from recetas";
+$result=mysqli_query($conexion,$query);
+
+?>
 <body>
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
@@ -73,54 +77,17 @@
     <section class="container my-5">
         <h2 class="mb-4">Recetas Populares</h2>
         <div class="row">
+
+<?php foreach( $result as $text){ ?>
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="https://www.mdzol.com/u/fotografias/m/2023/8/4/f600x337-1453655_1482558_5050.png" class="card-img-top" alt="Pollo a la Parrilla con Ajo y Limón" style="height: 300px; object-fit: cover;">
+                    <img src="" class="card-img-top" alt="<?php echo $text ['categoria']; ?>" style="height: 300px; object-fit: cover;">
                     <div class="card-body">
-                        <h5 class="card-title">Pollo a la parrilla con ajo y limón</h5>
+                        <h5 class="card-title"><?php echo $text ['titulo']; ?> </h5>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/8411DB82-6FEE-40B7-AA3D-E038291C7216/Derivates/A5DE242A-052A-4E09-A0D8-459F5FBA83C9.jpg" class="card-img-top" alt="Verduras Asadas con Salsa" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Verduras asadas con salsa</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://imag.bonviveur.com/espaguetis-aglio-e-oleo.jpg" class="card-img-top" alt="Espagueti Aglio e Olio" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Espagueti aglio e olio</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://img.freepik.com/fotos-premium/plato-acai-berry-bliss_1234220-38209.jpg" class="card-img-top" alt="Tazón de Batido de Berry y Bliss" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Tazón de batido de berry y bliss</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://cdn7.kiwilimon.com/brightcove/10425/640x640/10425.jpg.webp" class="card-img-top" alt="Ensalada Navideña" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Ensalada navideña</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://images-gmi-pmc.edge-generalmills.com/57ac882e-33ab-4482-bf6f-3664ce30c122.jpg" class="card-img-top" alt="Pavo al Horno" style="height: 300px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Pavo al horno</h5>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </section>
 

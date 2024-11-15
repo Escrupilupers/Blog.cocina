@@ -25,5 +25,9 @@ class ConsultasRecetas {
         $sql = "DELETE FROM recetas WHERE id_receta=$id_receta";
         return ejecutarConsulta($sql);
     }
+public function mostrar($id_receta) {
+    $sql = "select * from recet where id_receta='$id_receta'";
+    return ejecutarConsultaSimpleFila($sql);
+} 
 }
 ?>

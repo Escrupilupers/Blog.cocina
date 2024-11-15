@@ -49,5 +49,12 @@ switch ($_GET["op"]) {
             echo $rspta ? "Receta actualizada" : "No se pudo actualizar la receta";
         }
         break;
+        case 'mostrar':
+            $rspta = $recetas->mostrar($id_receta);
+            echo json_encode($rspta);
+    
+        break;
+
+
 }
 ?>
