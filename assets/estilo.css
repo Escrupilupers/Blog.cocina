@@ -1,32 +1,23 @@
 /* Estilos de la barra de navegación */
-.navbar {
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 10px;
+.custom-links a {
+    color: white; /* Color de las letras */
+    text-decoration: none; /* Sin subrayado por defecto */
+    position: relative; /* Necesario para la barra inferior */
 }
 
-.navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
+.custom-links a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px; /* Grosor de la barra */
+    left: 0;
+    bottom: -5px; /* Ajusta la posición de la barra */
+    background-color: white; /* Color de la barra */
+    transition: width 0.3s ease; /* Efecto de transición al hacer hover */
 }
 
-.nav-link {
-    margin-right: 15px;
-    font-size: 1.1rem;
-}
-
-.btn-warning {
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-}
-
-.btn-warning:hover {
-    background-color: #e6b800;
-}
-
-.container {
-    margin-top: 30px;
+.custom-links a:hover::after {
+    width: 100%; /* La barra se extiende cuando pasas el cursor */
 }
 
 h1 {

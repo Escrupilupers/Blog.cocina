@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\blog.cocina\ajax\php del html\conexion.php';
+include '../config/Conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $receta_id = $_POST['receta_id'];
