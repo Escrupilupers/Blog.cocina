@@ -1,4 +1,4 @@
-<?php include 'C:\xampp\htdocs\blog.cocina\ajax\php del html\conexion.php'; ?>
+<?php include '../config/Conexion.php'; ?>
 
 <?php
 session_start();

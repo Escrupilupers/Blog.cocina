@@ -11,6 +11,9 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+// Compatibilidad con `$conn`
+$conn = $conexion;
+
 if (!function_exists('ejecutarConsulta')) {
     /**
      * Ejecutar una consulta SQL general

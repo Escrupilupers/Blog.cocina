@@ -9,11 +9,20 @@
 <body>
 
     <?php 
-    include 'C:\xampp\htdocs\blog.cocina\ajax\php del html\conexion.php'; 
-    
+    include '../config/Conexion.php'; 
+
     // Verificar conexión
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Obtener el id_receta de la URL
+    if (isset($_GET['id_receta'])) {
+        $id_receta = intval($_GET['id_receta']); // Convertir el id a un valor entero
+    } else {
+        // Si no se pasa id_receta, redirigir a la página principal
+        header('Location: index.php');
+        exit();
     }
     ?>
 
@@ -26,8 +35,13 @@
 
     <section class="container my-5">
         <?php
-        // Consulta para obtener solo la primera receta
-        $sql = "SELECT * FROM recetas LIMIT 1";
+        // Consulta para obtener solo la receta seleccionada con su imagen
+        $sql = "
+            SELECT r.id_receta, r.titulo, i.ruta_imagen 
+            FROM recetas AS r
+            INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
+            WHERE r.id_receta = $id_receta
+        ";
         $result = $conn->query($sql);
 
         // Verificar que la consulta se ejecutó correctamente
@@ -35,43 +49,44 @@
             die("Error en la consulta de recetas: " . $conn->error);
         }
 
-        // Comprobar si hay recetas disponibles
+        // Comprobar si la receta está disponible
         if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo "<h2>" . htmlspecialchars($row["titulo"]) . "</h2>"; // Usamos el campo 'titulo' en lugar de 'nombre'
-                echo "<h4>Ingredientes:</h4><ul>";
+            // Mostrar la receta seleccionada
+            $row = $result->fetch_assoc();
+            echo "<h2>" . htmlspecialchars($row["titulo"]) . "</h2>"; 
+            echo "<img src='" . htmlspecialchars($row["ruta_imagen"]) . "' alt='Imagen de " . htmlspecialchars($row["titulo"]) . "' class='img-fluid mb-3'>";
+            echo "<h4>Ingredientes:</h4><ul>";
 
-                // Consulta para obtener los ingredientes de la receta
-                $sql_ingredientes = "SELECT i.nombre_ingrediente 
-                                     FROM receta_ingredientes ri 
-                                     JOIN ingredientes i ON ri.id_ingrediente = i.id_ingrediente 
-                                     WHERE ri.id_receta = " . intval($row["id_receta"]);
+            // Consulta para obtener los ingredientes de la receta seleccionada
+            $sql_ingredientes = "SELECT i.nombre_ingrediente 
+                                 FROM receta_ingredientes ri 
+                                 JOIN ingredientes i ON ri.id_ingrediente = i.id_ingrediente 
+                                 WHERE ri.id_receta = $id_receta";
 
-                $result_ingredientes = $conn->query($sql_ingredientes);
+            $result_ingredientes = $conn->query($sql_ingredientes);
 
-                // Verificar que la consulta de ingredientes se ejecutó correctamente
-                if ($result_ingredientes === false) {
-                    die("Error en la consulta de ingredientes: " . $conn->error);
-                }
-
-                // Mostrar ingredientes
-                while($ingrediente = $result_ingredientes->fetch_assoc()) {
-                    echo "<li>" . htmlspecialchars($ingrediente["nombre_ingrediente"]) . "</li>";
-                }
-
-                echo "</ul><h4>Pasos:</h4><ol>";
-
-                // Asumimos que el campo "pasos" tiene un texto con los pasos (esto puede ajustarse si el formato es diferente)
-                if (isset($row["pasos"])) {
-                    echo "<li>" . htmlspecialchars($row["pasos"]) . "</li>";
-                } else {
-                    echo "<li>No se han especificado pasos para esta receta.</li>";
-                }
-
-                echo "</ol><hr>";
+            // Verificar que la consulta de ingredientes se ejecutó correctamente
+            if ($result_ingredientes === false) {
+                die("Error en la consulta de ingredientes: " . $conn->error);
             }
+
+            // Mostrar ingredientes
+            while ($ingrediente = $result_ingredientes->fetch_assoc()) {
+                echo "<li>" . htmlspecialchars($ingrediente["nombre_ingrediente"]) . "</li>";
+            }
+
+            echo "</ul><h4>Pasos:</h4><ol>";
+
+            // Asumimos que el campo "pasos" tiene un texto con los pasos
+            if (isset($row["pasos"])) {
+                echo "<li>" . htmlspecialchars($row["pasos"]) . "</li>";
+            } else {
+                echo "<li>No se han especificado pasos para esta receta.</li>";
+            }
+
+            echo "</ol><hr>";
         } else {
-            echo "<p>No hay recetas disponibles.</p>";
+            echo "<p>No hay detalles disponibles para esta receta.</p>";
         }
         ?>
         <a href="index.php" class="btn btn-primary">Volver a la página principal</a>
