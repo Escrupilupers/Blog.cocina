@@ -20,17 +20,37 @@
     </style>    
 </head>
 <body>
-    <!-- Nueva Navegación (copiada del segundo código) -->
+    <?php
+    // Conexión a la base de datos
+    include '../config/Conexion.php';
+
+    // Consulta para obtener las imágenes de las recetas con IDs específicos
+    $query = "
+        SELECT r.id_receta, i.ruta_imagen 
+        FROM recetas AS r
+        INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
+        WHERE r.id_receta IN (6, 7, 8, 9)
+    ";
+    $result = mysqli_query($conexion, $query);
+
+    // Crear un array para almacenar las rutas de las imágenes
+    $imagenes = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $imagenes[$row['id_receta']] = $row['ruta_imagen'];
+    }
+    ?>
+
+    <!-- Nueva Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="index.html">A Cocinar</a>
+            <a class="navbar-brand" href="index.php">A Cocinar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
+                        <a class="nav-link active" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="plantilla.php">Recetas</a>
@@ -46,29 +66,31 @@
             </div>
         </div>
     </nav>
-    <!-- Fin de la nueva Navegación -->
 
     <!-- Contenedor con imagen de fondo -->
     <div class="bg-image" style="background-image: url('https://wallpapers.com/images/hd/food-4k-1pf6px6ryqfjtnyr.jpg'); height: 100vh;">
-        <div class="mask p-2">
-            <!-- Contenido del contenedor de fondo -->
-            <div class="container text-center" style="position: relative; z-index: 5;">
-                <h1 class="text-white md-5">Libera la excelencia culinaria</h1>
-                <button class="btn btn-danger md-3">Ver Recetas</button>
-            </div>
+    <div class="mask p-2">
+        <div class="container text-center" style="position: relative; z-index: 5;">
+            <h1 class="text-white md-5">Libera la excelencia culinaria</h1>
+            <button class="btn btn-danger md-3">Ver Recetas</button>
         </div>
     </div>
+</div>
 
-    <!-- Galería de imágenes flotantes entre contenedores -->
-    <div class="image-gallery text-center">
-        <img src="https://content.skyscnr.com/m/2dcd7d0e6f086057/original/GettyImages-186142785.jpg" alt="Receta 1" class="img-fluid">
-        <img src="https://lirp.cdn-website.com/8af471c9/dms3rep/multi/opt/Comida-r%C3%A1pida-caracter%C3%ADsticas-+y-+ventajas-1920w.jpg" alt="Receta 2" class="img-fluid">
-        <img src="https://olaclick.com/wp-content/uploads/elementor/thumbs/Estrategias-de-Marketing-para-tu-restaurante-de-comida-rapida-100-qihbx7u0oh4fif67h9nlkbeotqzhkc07oprrd006l4.jpg" alt="Receta 3" class="img-fluid">
-        <img src="https://irh.edu.mx/wp-content/uploads/2023/04/pexels-elevate-12673201a.jpg" alt="Receta 4" class="img-fluid">
-    </div>
+
+<!-- Galería de imágenes flotantes entre contenedores -->
+<div class="image-gallery text-center">
+    <?php foreach ($imagenes as $id_receta => $ruta_imagen): ?>
+        <a href="PlantillaRegistro.php?id_receta=<?php echo $id_receta; ?>">
+            <img src="<?php echo $ruta_imagen; ?>" alt="Receta <?php echo $id_receta; ?>" class="img-fluid">
+        </a>
+    <?php endforeach; ?>
+</div>
+
 
     <!-- Sección principal con Últimas Recetas y Recetas en Tendencia -->
-    <div class="container md-5">
+ <!-- Sección principal con Últimas Recetas y Recetas en Tendencia -->
+ <div class="container md-5">
         <div class="row">
             <div class="col-md-8">
                 <h2 class="text-center">Últimas Recetas</h2>
