@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recetas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/librerias/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <style>
+        .img-fluid, .img-thumbnail {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .trend-recipes img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>    
 </head>
 <body>
 
@@ -30,6 +43,26 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.php">A Cocinar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plantilla.php">Recetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tips.html">Tips de cocina</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobre-nosotros.html">Sobre nosotros</a>
+                    </li>
+                </ul>
+                <button class="btn btn-warning ms-3">Subscríbete</button>
+            </div>
         </div>
     </nav>
 
@@ -91,6 +124,17 @@
         ?>
         <a href="index.php" class="btn btn-primary">Volver a la página principal</a>
     </section>
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
+        <p>Síguenos en nuestras redes sociales</p>
+        <div class="social-icons">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="YouTube">
+        </div>
+    </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

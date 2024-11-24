@@ -25,18 +25,50 @@
     include '../config/Conexion.php';
 
     // Consulta para obtener las imágenes de las recetas con IDs específicos
-    $query = "
+    $query_imagenes_especificas = "
         SELECT r.id_receta, i.ruta_imagen 
         FROM recetas AS r
         INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
         WHERE r.id_receta IN (6, 7, 8, 9)
     ";
-    $result = mysqli_query($conexion, $query);
+    $result_imagenes_especificas = mysqli_query($conexion, $query_imagenes_especificas);
 
-    // Crear un array para almacenar las rutas de las imágenes
-    $imagenes = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $imagenes[$row['id_receta']] = $row['ruta_imagen'];
+    // Crear un array para almacenar las rutas de las imágenes de recetas específicas
+    $imagenes_especificas = [];
+    while ($row = mysqli_fetch_assoc($result_imagenes_especificas)) {
+        $imagenes_especificas[$row['id_receta']] = $row['ruta_imagen'];
+    }
+
+    // Consulta para obtener las imágenes de las últimas recetas (3 más recientes)
+    $query_ultimas_recetas = "
+        SELECT r.id_receta, r.titulo, i.ruta_imagen
+        FROM recetas AS r
+        INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
+        ORDER BY r.id_receta DESC
+        LIMIT 3
+    ";
+    $result_ultimas_recetas = mysqli_query($conexion, $query_ultimas_recetas);
+
+    // Crear un array para almacenar las rutas de las imágenes de las últimas recetas
+    $ultimas_recetas = [];
+    while ($row = mysqli_fetch_assoc($result_ultimas_recetas)) {
+        $ultimas_recetas[] = $row;
+    }
+
+    // Consulta para obtener las primeras 4 recetas (recetas en tendencia)
+    $query_recetas_tendencia = "
+        SELECT r.id_receta, r.titulo, i.ruta_imagen
+        FROM recetas AS r
+        INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
+        ORDER BY r.id_receta ASC
+        LIMIT 4
+    ";
+    $result_recetas_tendencia = mysqli_query($conexion, $query_recetas_tendencia);
+
+    // Crear un array para almacenar las rutas de las imágenes de las recetas en tendencia
+    $recetas_tendencia = [];
+    while ($row = mysqli_fetch_assoc($result_recetas_tendencia)) {
+        $recetas_tendencia[] = $row;
     }
     ?>
 
@@ -69,41 +101,36 @@
 
     <!-- Contenedor con imagen de fondo -->
     <div class="bg-image" style="background-image: url('https://wallpapers.com/images/hd/food-4k-1pf6px6ryqfjtnyr.jpg'); height: 100vh;">
-    <div class="mask p-2">
-        <div class="container text-center" style="position: relative; z-index: 5;">
-            <h1 class="text-white md-5">Libera la excelencia culinaria</h1>
-            <button class="btn btn-danger md-3">Ver Recetas</button>
+        <div class="mask p-2">
+            <div class="container text-center" style="position: relative; z-index: 5;">
+                <h1 class="text-white md-5">Libera la excelencia culinaria</h1>
+                <button class="btn btn-danger md-3">Ver Recetas</button>
+            </div>
         </div>
     </div>
-</div>
 
-
-<!-- Galería de imágenes flotantes entre contenedores -->
-<div class="image-gallery text-center">
-    <?php foreach ($imagenes as $id_receta => $ruta_imagen): ?>
-        <a href="PlantillaRegistro.php?id_receta=<?php echo $id_receta; ?>">
-            <img src="<?php echo $ruta_imagen; ?>" alt="Receta <?php echo $id_receta; ?>" class="img-fluid">
-        </a>
-    <?php endforeach; ?>
-</div>
-
+    <!-- Galería de imágenes flotantes entre contenedores -->
+    <div class="image-gallery text-center">
+        <?php foreach ($imagenes_especificas as $id_receta => $ruta_imagen): ?>
+            <a href="PlantillaRegistro.php?id_receta=<?php echo $id_receta; ?>">
+                <img src="<?php echo $ruta_imagen; ?>" alt="Receta <?php echo $id_receta; ?>" class="img-fluid">
+            </a>
+        <?php endforeach; ?>
+    </div>
 
     <!-- Sección principal con Últimas Recetas y Recetas en Tendencia -->
- <!-- Sección principal con Últimas Recetas y Recetas en Tendencia -->
- <div class="container md-5">
+    <div class="container md-5">
         <div class="row">
             <div class="col-md-8">
                 <h2 class="text-center">Últimas Recetas</h2>
                 <div class="row">
-                    <div class="col-md-4">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg16x66rKl5qTK8MyauNapR3mLypTwl6v9-w&s" class="img-fluid rounded" alt="Última receta 1">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="https://www.okchicas.com/wp-content/uploads/2021/05/Postres-aesthetic-1.jpg" class="img-fluid rounded" alt="Última receta 2">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="https://i.pinimg.com/1200x/ba/2d/69/ba2d690875e40e823fd23dd7da1bbaaf.jpg" class="img-fluid rounded" alt="Última receta 3">
-                    </div>
+                    <?php foreach ($ultimas_recetas as $receta): ?>
+                        <div class="col-md-4">
+                            <a href="PlantillaRegistro.php?id_receta=<?php echo $receta['id_receta']; ?>">
+                                <img src="<?php echo $receta['ruta_imagen']; ?>" class="img-fluid rounded" alt="Última receta <?php echo $receta['titulo']; ?>">
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <div class="col-md-4">
@@ -119,16 +146,13 @@
                     <div class="mask-gray p-3 rounded">
                         <h2 class="text-center">Recetas en Tendencia</h2>
                         <div class="trend-recipes d-flex justify-content-center md-3">
-                            <img src="https://content.skyscnr.com/m/2dcd7d0e6f086057/original/GettyImages-186142785.jpg" class="img-thumbnail" alt="Tendencia 1">
-                            <img src="https://lirp.cdn-website.com/8af471c9/dms3rep/multi/opt/Comida-r%C3%A1pida-caracter%C3%ADsticas-+y-+ventajas-1920w.jpg" class="img-thumbnail" alt="Tendencia 2">
-                            <img src="https://olaclick.com/wp-content/uploads/elementor/thumbs/Estrategias-de-Marketing-para-tu-restaurante-de-comida-rapida-100-qihbx7u0oh4fif67h9nlkbeotqzhkc07oprrd006l4.jpg" class="img-thumbnail" alt="Tendencia 3">
-                            <img src="https://storage.googleapis.com/retodiario/2023/09/1d6092bd-p-scaled.jpg" class="img-thumbnail" alt="Tendencia 4">
+                            <?php foreach ($recetas_tendencia as $receta): ?>
+                                <a href="PlantillaRegistro.php?id_receta=<?php echo $receta['id_receta']; ?>">
+                                    <img src="<?php echo $receta['ruta_imagen']; ?>" class="img-thumbnail" alt="Tendencia <?php echo $receta['titulo']; ?>">
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                     </div>
-                </div>
-
-                <div class= "md-4">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg16x66rKl5qTK8MyauNapR3mLypTwl6v9-w&s" class="img-fluid rounded" alt="Imagen adicional">
                 </div>
             </div>
         </div>
