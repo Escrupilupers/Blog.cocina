@@ -1,0 +1,32 @@
+/* Aseguramos que el footer siempre esté al fondo de la página */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Usamos flex para asegurar que el contenido se expanda */
+}
+
+.container {
+    flex: 1; /* Deja que el contenido se expanda para llenar el espacio restante */
+    padding-bottom: 50px; /* Esto asegura que el contenido no quede debajo del footer */
+}
+
+/* Navbar */
+.navbar {
+    z-index: 1000; /* Asegura que la navbar se quede encima del contenido */
+}
+
+/* Navbar links */
+.navbar-light .navbar-nav .nav-link {
+    color: #333 !important; /* Asegura que los enlaces se vean correctamente */
+}
+
+footer {
+    width: 100%;
+    padding: 20px 0;
+}
+
+footer .social-icons img {
+    max-width: 30px;
+    margin: 0 10px;
+}

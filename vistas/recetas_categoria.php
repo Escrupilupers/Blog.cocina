@@ -1,17 +1,17 @@
-<?php
+<?php 
 require "../config/Conexion.php";
 
-// Consulta para unir recetas con sus imágenes
-$query = "
-    SELECT r.id_receta, r.titulo, r.categoria, i.ruta_imagen 
-    FROM recetas AS r
-    INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
-";
-$result = mysqli_query($conexion, $query);
-
-// Consulta para obtener las categorías dinámicamente
-$query_categorias = "SELECT DISTINCT categoria FROM recetas";
-$result_categorias = mysqli_query($conexion, $query_categorias);
+if (isset($_GET['categoria'])) {
+    $categoria = $_GET['categoria'];
+    $query_recetas_categoria = "SELECT r.id_receta, r.titulo, r.categoria, i.ruta_imagen 
+                                FROM recetas AS r
+                                INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
+                                WHERE r.categoria = '$categoria'";
+    $result_recetas = mysqli_query($conexion, $query_recetas_categoria);
+} else {
+    echo "Categoría no especificada.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,9 +19,43 @@ $result_categorias = mysqli_query($conexion, $query_categorias);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recetario</title>
+    <title>Recetas de <?php echo $categoria; ?></title>
     <link href="../assets/librerias/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/estilo.recetas.css">
+    <style>
+        /* Aseguramos que el footer siempre esté al fondo de la página */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Usamos flex para asegurar que el contenido se expanda */
+        }
+
+        .container {
+            flex: 1; /* Deja que el contenido se expanda para llenar el espacio restante */
+            padding-bottom: 50px; /* Esto asegura que el contenido no quede debajo del footer */
+        }
+
+        /* Navbar */
+        .navbar {
+            z-index: 1000; /* Asegura que la navbar se quede encima del contenido */
+        }
+
+        /* Navbar links */
+        .navbar-light .navbar-nav .nav-link {
+            color: #333 !important; /* Asegura que los enlaces se vean correctamente */
+        }
+
+        footer {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        footer .social-icons img {
+            max-width: 30px;
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navegación -->
@@ -51,46 +85,18 @@ $result_categorias = mysqli_query($conexion, $query_categorias);
         </div>
     </nav>
 
-    <!-- Sección Explora la Variedad -->
-    <div class="row mx-3">
-        <div class="col-md-1"></div>
-        <div class="col-md-11 turquoise-box">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Explora la variedad</h3>
-                    <p>Si es un entusiasta del desayuno, un conocedor de delicias saladas o busca postres irresistibles, nuestra cuidada selección tiene algo para satisfacer todos los paladares.</p>
-                </div>
-                <div class="col-md-6 icon-center"></div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <div class="row">
-                        <?php while ($categoria = mysqli_fetch_assoc($result_categorias)) { ?>
-                            <div class="col-md-2 text-center">
-                                <a href="recetas_categoria.php?categoria=<?php echo $categoria['categoria']; ?>">
-                                    <img src="../assets/images/imagenes/Iconos/<?php echo strtolower($categoria['categoria']); ?>.png" alt="<?php echo $categoria['categoria']; ?>" style="max-width: 30px;">
-                                    <br><?php echo $categoria['categoria']; ?>
-                                </a>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recetas Populares -->
+    <!-- Título de la página de categoría -->
     <section class="container my-5">
-        <h2 class="mb-4">Recetas Populares</h2>
+        <h2 class="mb-4">Recetas de <?php echo $categoria; ?></h2>
         <div class="row">
-            <?php while ($text = mysqli_fetch_assoc($result)) { ?>
+            <?php while ($receta = mysqli_fetch_assoc($result_recetas)) { ?>
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <a href="/Blog.cocina/vistas/PlantillaRegistro.php?id_receta=<?php echo $text['id_receta']; ?>">
-                            <img src="<?php echo $text['ruta_imagen']; ?>" class="card-img-top" alt="<?php echo $text['categoria']; ?>" style="height: 300px; object-fit: cover;">
+                        <a href="/Blog.cocina/vistas/PlantillaRegistro.php?id_receta=<?php echo $receta['id_receta']; ?>">
+                            <img src="<?php echo $receta['ruta_imagen']; ?>" class="card-img-top" alt="<?php echo $receta['titulo']; ?>" style="height: 300px; object-fit: cover;">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $text['titulo']; ?></h5>
+                            <h5 class="card-title"><?php echo $receta['titulo']; ?></h5>
                         </div>
                     </div>
                 </div>
