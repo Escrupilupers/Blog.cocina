@@ -36,10 +36,10 @@ $result = mysqli_query($conexion, $query);
                         <a class="nav-link" href="plantilla.php">Recetas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="tips.html">Tips de cocina</a>
+                        <a class="nav-link" href="tips.php">Tips de cocina</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.html">Sobre nosotros</a>
+                        <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
                     </li>
                 </ul>
                 <button class="btn btn-warning ms-3">Subscríbete</button>

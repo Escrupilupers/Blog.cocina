@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="..\assets\styless.css">
 </head>
 <body>
+    <?php
+    // Conexión a la base de datos
+    include '../config/Conexion.php';
+
+    // Consulta para obtener las imágenes y los títulos de las recetas con IDs específicos
+    $query_imagenes_especificas = "
+        SELECT r.id_receta, r.titulo, i.ruta_imagen 
+        FROM recetas AS r
+        INNER JOIN imagenes AS i ON r.id_imagen = i.id_imagen
+        WHERE r.id_receta IN (10, 11)
+    ";
+    $result_imagenes_especificas = mysqli_query($conexion, $query_imagenes_especificas);
+    
+    // Crear un array para almacenar las rutas de las imágenes y los títulos de recetas específicas
+    $imagenes_especificas = [];
+    while ($row = mysqli_fetch_assoc($result_imagenes_especificas)) {
+        $imagenes_especificas[$row['id_receta']] = [
+            'titulo' => $row['titulo'],   // Guardamos el título de la receta
+            'ruta_imagen' => $row['ruta_imagen']   // Guardamos la ruta de la imagen
+        ];
+    }
+    ?>
 
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
@@ -25,10 +47,10 @@
                         <a class="nav-link" href="plantilla.php">Recetas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="tips.html">Tips de cocina</a>
+                        <a class="nav-link" href="tips.php">Tips de cocina</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="C:\xampp\htdocs\Projecto web\Recetario\sobre-nosotros.html">Sobre nosotros</a>
+                        <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
                     </li>
                 </ul>
                 <button class="btn btn-warning ms-3">Subscríbete</button>
@@ -99,26 +121,25 @@
 
     <!-- Recetas Populares -->
     <section class="container my-5">
-        <h2 class="mb-4">Recetas Populares</h2>
+        <h1 class="text-center">Nuestros favoritos</h1>
+        <p class="text-center">Explora las sigueintes recetas favoritas de los creadores</p>
+
+              <div class="row">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://img.freepik.com/fotos-premium/pollo-asado-crujiente-infundido-hierbas-aromaticas_167857-48341.jpg" class="card-img-top" alt="Pollo Salado con Infusión de Hierbas">
+    <?php foreach ($imagenes_especificas as $id_receta => $datos): ?>
+        <div class="col-md-6 mb-4">
+            <a href="PlantillaRegistro.php?id_receta=<?php echo $id_receta; ?>" class="text-decoration-none">
+                <div class="card">
+                    <img src="<?php echo $datos['ruta_imagen']; ?>" class="card-img-top" alt="Receta <?php echo $id_receta; ?>">
                     <div class="card-body">
-                        <h5 class="card-title">Pollo salado con infusión de hierbas</h5>
+                        <h5 class="card-title"><?php echo $datos['titulo']; ?></h5>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card mb-4 shadow-sm">
-                    <img src="https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/68c7450e-6579-402a-a8e0-5f7c5a1a01d5/Derivates/4bbcb8e7-e9da-45d0-9000-abd23e19d112.jpg" class="card-img-top" alt="Mousse de Chocolate Decadente">
-                    <div class="card-body">
-                        <h5 class="card-title">Mousse de chocolate decadente</h5>
-                    </div>
-                </div>
-            </div>
+            </a>
         </div>
-    </section>
+    <?php endforeach; ?>
+</div>
+
 
     <!-- Sección de Suscripción -->
     <section class="suscripcion text-center py-5">

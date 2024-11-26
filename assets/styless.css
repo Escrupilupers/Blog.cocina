@@ -68,3 +68,11 @@ img {
     width: 24px;
     margin: 0 10px;
 }
+/* Recetas populares */
+.row {
+    margin-bottom: 30px;
+}
+
+.card img {
+    border-radius: 10px;
+}
