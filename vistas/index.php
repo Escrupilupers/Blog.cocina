@@ -100,7 +100,7 @@
     </nav>
 
     <!-- Contenedor con imagen de fondo -->
-    <div class="bg-image" style="background-image: url('https://wallpapers.com/images/hd/food-4k-1pf6px6ryqfjtnyr.jpg'); height: 100vh;">
+    <div class="bg-image" style="background-image: url('../assets/images/imagenes/food4k.jpg'); height: 100vh;">
         <div class="mask p-2">
             <div class="container text-center" style="position: relative; z-index: 5;">
                 <h1 class="text-white md-5">Libera la excelencia culinaria</h1>
@@ -160,13 +160,13 @@
 
     <!-- Pie de página -->
     <footer class="bg-dark text-white text-center py-4">
-        <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
-        <p>Síguenos en nuestras redes sociales</p>
-        <div class="social-icons">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="YouTube">
-        </div>
+            <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
+            <p>Síguenos en nuestras redes sociales</p>
+            <div class="social-icons">
+                <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
+                <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
+                <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
+            </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

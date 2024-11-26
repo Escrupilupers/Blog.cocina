@@ -138,7 +138,7 @@
             </a>
         </div>
     <?php endforeach; ?>
-</div>
+    </section>
 
 
     <!-- Sección de Suscripción -->
@@ -156,14 +156,14 @@
     <!-- Footer -->
 <!-- Pie de página -->
 <footer class="bg-dark text-white text-center py-4">
-    <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
-    <p>Síguenos en nuestras redes sociales</p>
-    <div class="social-icons">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="YouTube">
-    </div>
-</footer>
+            <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
+            <p>Síguenos en nuestras redes sociales</p>
+            <div class="social-icons">
+                <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
+                <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
+                <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
+            </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>

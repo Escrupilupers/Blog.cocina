@@ -16,8 +16,8 @@ $result = mysqli_query($conexion, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recetario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/blog.cocina/assets/style.css">
+    <link href="../assets/librerias/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
     <!-- Navegación -->
@@ -62,19 +62,19 @@ $result = mysqli_query($conexion, $query);
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-2 text-center">
-                            <img src="https://cdn-icons-png.flaticon.com/256/563/563889.png" alt="Desayuno" style="max-width: 30px;"><br>Desayuno
+                            <img src="../assets\images\imagenes\Iconos\desayuno.png" alt="Desayuno" style="max-width: 30px;"><br>Desayuno
                         </div>
                         <div class="col-md-2 text-center">
-                            <img src="https://cdn-icons-png.flaticon.com/256/1046/1046893.png" alt="Almuerzo" style="max-width: 30px;"><br>Almuerzo
+                            <img src="../assets\images\imagenes\Iconos\almuerzo.png" alt="Almuerzo" style="max-width: 30px;"><br>Almuerzo
                         </div>
                         <div class="col-md-2 text-center">
-                            <img src="https://cdn-icons-png.flaticon.com/256/3106/3106992.png" alt="Cena" style="max-width: 30px;"><br>Cena
+                            <img src="../assets\images\imagenes\Iconos\cena.png" alt="Cena" style="max-width: 30px;"><br>Cena
                         </div>
                         <div class="col-md-2 text-center">
-                            <img src="https://cdn-icons-png.flaticon.com/256/2965/2965574.png" alt="Postre" style="max-width: 30px;"><br>Postre
+                            <img src="../assets\images\imagenes\Iconos\postre.png" alt="Postre" style="max-width: 30px;"><br>Postre
                         </div>
                         <div class="col-md-2 text-center">
-                            <img src="https://cdn-icons-png.flaticon.com/256/5718/5718873.png" alt="Antojo" style="max-width: 30px;"><br>Antojo!
+                            <img src="../assets\images\imagenes\Iconos\antojo.png" alt="Antojo" style="max-width: 30px;"><br>Antojo!
                         </div>
                     </div>
                 </div>
@@ -102,14 +102,15 @@ $result = mysqli_query($conexion, $query);
     </section>
 
     <!-- Pie de página -->
+
     <footer class="bg-dark text-white text-center py-4">
-        <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
-        <p>Síguenos en nuestras redes sociales</p>
-        <div class="social-icons">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="YouTube">
-        </div>
+            <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
+            <p>Síguenos en nuestras redes sociales</p>
+            <div class="social-icons">
+                <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
+                <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
+                <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
+            </div>
     </footer>
 </body>
 </html>
