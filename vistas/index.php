@@ -104,7 +104,7 @@
         <div class="mask p-2">
             <div class="container text-center" style="position: relative; z-index: 5;">
                 <h1 class="text-white md-5">Libera la excelencia culinaria</h1>
-                <button class="btn btn-danger md-3">Ver Recetas</button>
+                <a href="..\vistas\plantilla.php"> <button class="btn btn-danger md-3">Ver Recetas</button> </a>
             </div>
         </div>
     </div>

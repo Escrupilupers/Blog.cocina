@@ -19,6 +19,16 @@
             object-fit: contain;
             margin-left: 10px;
         }
+
+        /* Aseguramos que el botón sea más visible */
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -92,9 +102,7 @@
         </div>
     <?php endforeach; ?>
 </div>
-  <!-- Recetas populares -->
-
-        <!-- Dominando los conceptos básicos -->
+        <!-- Recetas Populares -->
         <h2 class="my-4">Dominando los Conceptos Básicos</h2>
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -104,6 +112,10 @@
                         <h5 class="card-title">Habilidades con el cuchillo</h5>
                         <p class="card-text">Desbloquea el arte de la precisión con técnicas adecuadas para picar, cortar en cubitos y rebanar.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="habilidades.php">
+                        <button class="btn btn-custom">Ver más sobre habilidades con el cuchillo</button>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
@@ -113,6 +125,10 @@
                         <h5 class="card-title">Saltear y dorar</h5>
                         <p class="card-text">Aprende los secretos para saltear como un profesional y crear texturas irresistibles.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="saltearydorar.php">
+                        <button class="btn btn-custom">Ver más sobre saltear y dorar</button>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
@@ -122,36 +138,53 @@
                         <h5 class="card-title">Consejos para asar</h5>
                         <p class="card-text">Garantiza una cocción uniforme y sabrosa con nuestros consejos de asado.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="asar.php">
+                        <button class="btn btn-custom">Ver más sobre consejos para asar</button>
+                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Más consejos -->
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://blogs.unitec.mx/hubfs/Imported_Blog_Media/estaciones-de-trabajo-cocina-profesional-2-Dec-17-2022-07-23-41-8269-PM.jpg" class="card-img-top" alt="Estaciones de trabajo de preparación">
+                    <img src="..\assets\images\imagenes\estacion comida.webp" class="card-img-top" alt="Estaciones de trabajo de preparación">
                     <div class="card-body">
                         <h5 class="card-title">Estaciones de trabajo de preparación</h5>
-                        <p class="card-text">Organice eficientemente el espacio de su cocina para picar, mezclar y cocinar.</p>
+                        <p class="card-text">Organiza eficientemente el espacio de tu cocina para picar, mezclar y cocinar.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="estaciones.php">
+                        <button class="btn btn-custom">Ver más sobre estaciones de trabajo</button>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://uvn-brightspot.s3.amazonaws.com/assets/vixes/imj/hogartotal/g/guia-rapida-para-limpiar-todo-tipo-de-superficies-en-la-cocina-1.jpg" class="card-img-top" alt="Limpiar sobre la marcha">
+                    <img src="..\assets\images\imagenes\limpieza.jpg" class="card-img-top" alt="Limpiar sobre la marcha">
                     <div class="card-body">
                         <h5 class="card-title">Limpiar sobre la marcha</h5>
                         <p class="card-text">Mantén tu cocina ordenada y eficiente mientras cocinas.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="limpiar.php">
+                        <button class="btn btn-custom">Ver más sobre limpiar sobre la marcha</button>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://m.media-amazon.com/images/I/C1kIkh-zKCL._CR0,0,4032,2275_SR684,386_.jpg" class="card-img-top" alt="Modificación de receta">
+                    <img src="..\assets\images\imagenes\fallout.jpg" class="card-img-top" alt="Modificación de receta">
                     <div class="card-body">
                         <h5 class="card-title">Modificación de receta</h5>
                         <p class="card-text">Explora la creatividad culinaria modificando recetas a tu estilo.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="modificacion.php">
+                        <button class="btn btn-custom">Ver más sobre modificación de receta</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -161,43 +194,57 @@
         <div class="row bg-light p-4 rounded-3">
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://media.istockphoto.com/id/1144977508/photo/gluten-free-diet-concept-selection-of-grains-and-carbohydrates-for-people-with-gluten.jpg?s=612x612&w=0&k=20&c=jeDGc2K8DconHlZ0NryCh2r7A0vJGvfCmzu24-fFuZs=" class="card-img-top" alt="Alternativas sin gluten">
+                    <img src="..\assets\images\imagenes\glutten.jpg" class="card-img-top" alt="Alternativas sin gluten">
                     <div class="card-body">
                         <h5 class="card-title">Alternativas sin gluten</h5>
                         <p class="card-text">Explore el mundo de las harinas y los cereales sin gluten para crear platos deliciosos.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="alternativas.php">
+                        <button class="btn btn-custom">Ver más sobre alternativas sin gluten</button>
+                    </a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://img.freepik.com/fotos-premium/cocina-basada-plantas-nuestra-fotografia-comida-vegana-vegetales-asados-libro-cocina-menu_763042-2002.jpg" class="card-img-top" alt="Cocina basada en plantas">
+                    <img src="..\assets\images\imagenes\cocinabasadaen plantas.jpeg" class="card-img-top" alt="Cocina basada en plantas">
                     <div class="card-body">
                         <h5 class="card-title">Cocina basada en plantas</h5>
                         <p class="card-text">Aprenda cómo crear platos sustanciosos y llenos de sabor sin productos animales.</p>
                     </div>
+                    <!-- El enlace y botón están fuera del contenido de la tarjeta para que no interfieran -->
+                    <a href="plantas.php">
+                        <button class="btn btn-custom">Ver más sobre cocina basada en plantas</button>
+                    </a>
                 </div>
             </div>
+
+            <!-- Nuevo bloque añadido -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://hoy.com.do/wp-content/uploads/2014/11/recetas-balanceadas.jpg" class="card-img-top" alt="Comida balanceada">
+                    <img src="..\assets\images\imagenes\recetas-balanceadas.webp" class="card-img-top" alt="Comida balanceada">
                     <div class="card-body">
                         <h5 class="card-title">Comida balanceada</h5>
                         <p class="card-text">Consejos para equilibrar nutrientes en todas tus comidas.</p>
                     </div>
+                    <a href="balanceada.php">
+                        <button class="btn btn-custom">Ver más sobre comida balanceada</button>
+                    </a>
                 </div>
             </div>
         </div>
+
     </section>
 
-    <!-- Pie de página -->
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4">
-            <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
-            <p>Síguenos en nuestras redes sociales</p>
-            <div class="social-icons">
-                <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
-                <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
-                <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
-            </div>
+        <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
+        <p>Síguenos en nuestras redes sociales</p>
+        <div class="social-icons">
+            <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
+            <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
+            <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
+        </div>
     </footer>
 
     <!-- Scripts -->
