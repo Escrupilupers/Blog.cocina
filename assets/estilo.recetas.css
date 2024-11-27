@@ -30,3 +30,19 @@ footer .social-icons img {
     max-width: 30px;
     margin: 0 10px;
 }
+/* Asegúrate de incluir esto en tu archivo CSS */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px; /* Añade más espacio entre los botones */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}

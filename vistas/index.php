@@ -93,6 +93,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
                     </li>
+                    <!-- Nuevo botón para redirigir al Dashboard -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white" href="..\vistas\dashboard_login_crud.php">Dashboard</a>
+                    </li>
                 </ul>
                 <button class="btn btn-warning ms-3">Subscríbete</button>
             </div>
