@@ -17,6 +17,26 @@
             width: 50px;
             height: 50px;
         }
+
+        .rating {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            font-size: 1.5rem;
+            color: gold;
+        }
+
+        .star {
+            cursor: pointer;
+        }
+
+        .star.filled {
+            color: gold;
+        }
+
+        .star.unfilled {
+            color: gray;
+        }
     </style>    
 </head>
 <body>
@@ -33,10 +53,12 @@
     if (isset($_GET['id_receta'])) {
         $id_receta = intval($_GET['id_receta']); // Convertir el id a un valor entero
     } else {
-        // Si no se pasa id_receta, redirigir a la página principal
         header('Location: index.php');
         exit();
     }
+
+    // Suponiendo que el usuario ya ha iniciado sesión
+    $id_usuario = 1; // Reemplazar con el ID del usuario autenticado
     ?>
 
     <!-- Navegación -->
@@ -68,7 +90,7 @@
 
     <section class="container my-5">
         <?php
-        // Consulta para obtener solo la receta seleccionada con su imagen
+        // Obtener receta y su imagen
         $sql = "
             SELECT r.id_receta, r.titulo, i.ruta_imagen 
             FROM recetas AS r
@@ -76,65 +98,97 @@
             WHERE r.id_receta = $id_receta
         ";
         $result = $conn->query($sql);
-
-        // Verificar que la consulta se ejecutó correctamente
         if ($result === false) {
             die("Error en la consulta de recetas: " . $conn->error);
         }
 
-        // Comprobar si la receta está disponible
         if ($result->num_rows > 0) {
-            // Mostrar la receta seleccionada
             $row = $result->fetch_assoc();
             echo "<h2>" . htmlspecialchars($row["titulo"]) . "</h2>"; 
             echo "<img src='" . htmlspecialchars($row["ruta_imagen"]) . "' alt='Imagen de " . htmlspecialchars($row["titulo"]) . "' class='img-fluid mb-3'>";
-            echo "<h4>Ingredientes:</h4><ul>";
 
-            // Consulta para obtener los ingredientes de la receta seleccionada
-            $sql_ingredientes = "SELECT i.nombre_ingrediente 
-                                 FROM receta_ingredientes ri 
-                                 JOIN ingredientes i ON ri.id_ingrediente = i.id_ingrediente 
-                                 WHERE ri.id_receta = $id_receta";
-
+            // Ingredientes
+            $sql_ingredientes = "
+                SELECT i.nombre_ingrediente 
+                FROM receta_ingredientes ri 
+                JOIN ingredientes i ON ri.id_ingrediente = i.id_ingrediente 
+                WHERE ri.id_receta = $id_receta";
             $result_ingredientes = $conn->query($sql_ingredientes);
-
-            // Verificar que la consulta de ingredientes se ejecutó correctamente
-            if ($result_ingredientes === false) {
-                die("Error en la consulta de ingredientes: " . $conn->error);
-            }
-
-            // Mostrar ingredientes
+            echo "<h4>Ingredientes:</h4><ul>";
             while ($ingrediente = $result_ingredientes->fetch_assoc()) {
                 echo "<li>" . htmlspecialchars($ingrediente["nombre_ingrediente"]) . "</li>";
             }
+            echo "</ul>";
 
-            echo "</ul><h4>Pasos:</h4><ol>";
-
-            // Asumimos que el campo "pasos" tiene un texto con los pasos
-            if (isset($row["pasos"])) {
-                echo "<li>" . htmlspecialchars($row["pasos"]) . "</li>";
-            } else {
-                echo "<li>No se han especificado pasos para esta receta.</li>";
+            // Calificación promedio
+            $sql_valoracion = "
+                SELECT AVG(calificacion) AS promedio_calificacion 
+                FROM valoraciones 
+                WHERE id_receta = $id_receta";
+            $result_valoracion = $conn->query($sql_valoracion);
+            $promedio_calificacion = 0;
+            if ($result_valoracion && $result_valoracion->num_rows > 0) {
+                $row_valoracion = $result_valoracion->fetch_assoc();
+                $promedio_calificacion = round($row_valoracion['promedio_calificacion']);
             }
 
-            echo "</ol><hr>";
+            // Mostrar estrellas y permitir interacción
+            echo "<h4>Calificación promedio:</h4>";
+            echo "<div class='rating' id='rating-section'>";
+            for ($i = 1; $i <= 5; $i++) {
+                $filled = $i <= $promedio_calificacion ? "filled" : "unfilled";
+                echo "<span class='star $filled' data-value='$i'>&#9733;</span>";
+            }
+            echo "</div>";
+            echo "<p id='rating-message' style='color: green;'></p>";
         } else {
             echo "<p>No hay detalles disponibles para esta receta.</p>";
         }
         ?>
         <a href="index.php" class="btn btn-primary">Volver a la página principal</a>
     </section>
-    <!-- Pie de página -->
+
     <footer class="bg-dark text-white text-center py-4">
-            <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
-            <p>Síguenos en nuestras redes sociales</p>
-            <div class="social-icons">
-                <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
-                <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
-                <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
-            </div>
+        <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const stars = document.querySelectorAll(".star");
+            const ratingMessage = document.getElementById("rating-message");
+            const idReceta = <?php echo json_encode($id_receta); ?>;
+
+            stars.forEach(star => {
+                star.addEventListener("click", () => {
+                    const rating = star.getAttribute("data-value");
+
+                    // Visualización de estrellas
+                    stars.forEach(s => s.classList.remove("filled", "unfilled"));
+                    stars.forEach((s, index) => {
+                        s.classList.add(index < rating ? "filled" : "unfilled");
+                    });
+
+                    // Enviar calificación al servidor
+                    fetch('guardar_calificacion.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id_receta: idReceta, calificacion: rating })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            ratingMessage.textContent = "¡Gracias por tu calificación!";
+                        } else {
+                            ratingMessage.textContent = "Error al guardar tu calificación.";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        ratingMessage.textContent = "Error al procesar la solicitud.";
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -17,7 +17,27 @@
             width: 50px;
             height: 50px;
         }
-    </style>    
+
+        #resultado-autocompletar {
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            border: 1px solid #ccc;
+            z-index: 9999;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #resultado-autocompletar p {
+            margin: 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #resultado-autocompletar p:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -93,11 +113,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
                     </li>
-                    <!-- Nuevo botón para redirigir al Dashboard -->
+                    <!-- Ícono de usuario para redirigir al Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white" href="..\vistas\dashboard_login_crud.php">Dashboard</a>
+                        <a class="nav-link" href="..\vistas\dashboard_login_crud.php">
+                            <img src="..\assets\images\imagenes\Iconos\profile-user.png" alt="Usuario" style="width: 24px; height: 24px;">
+                        </a>
                     </li>
                 </ul>
+                <!-- Buscador -->
+                <form method="GET" action="buscar_recetas.php" class="d-flex ms-3">
+                    <input type="text" name="titulo" id="titulo" class="form-control me-2" placeholder="Buscar receta por título" required>
+                    <button type="submit" class="btn btn-outline-primary">Buscar</button>
+                </form>
                 <button class="btn btn-warning ms-3">Subscríbete</button>
             </div>
         </div>
@@ -174,5 +201,31 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#titulo').keyup(function() {
+                var query = $(this).val();
+                if (query != '') {
+                    $.ajax({
+                        url: "buscar_recetas_autocompletar.php",
+                        method: "POST",
+                        data: { query: query },
+                        success: function(data) {
+                            $('#resultado-autocompletar').fadeIn();
+                            $('#resultado-autocompletar').html(data);
+                        }
+                    });
+                } else {
+                    $('#resultado-autocompletar').fadeOut();
+                }
+            });
+
+            $(document).on('click', 'p', function() {
+                $('#titulo').val($(this).text());
+                $('#resultado-autocompletar').fadeOut();
+            });
+        });
+    </script>
 </body>
 </html>
