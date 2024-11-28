@@ -92,43 +92,42 @@
     }
     ?>
 
-    <!-- Nueva Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">A Cocinar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="plantilla.php">Recetas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tips.php">Tips de cocina</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
-                    </li>
-                    <!-- Ícono de usuario para redirigir al Dashboard -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="..\vistas\dashboard_login_crud.php">
-                            <img src="..\assets\images\imagenes\Iconos\profile-user.png" alt="Usuario" style="width: 24px; height: 24px;">
-                        </a>
-                    </li>
-                </ul>
-                <!-- Buscador -->
-                <form method="GET" action="buscar_recetas.php" class="d-flex ms-3">
-                    <input type="text" name="titulo" id="titulo" class="form-control me-2" placeholder="Buscar receta por título" required>
-                    <button type="submit" class="btn btn-outline-primary">Buscar</button>
-                </form>
-                <button class="btn btn-warning ms-3">Subscríbete</button>
-            </div>
+<!-- Nueva Navegación -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="index.php">A Cocinar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="plantilla.php">Recetas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tips.php">Tips de cocina</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
+                </li>
+            </ul>
+            <!-- Buscador -->
+            <form method="GET" action="buscar_recetas.php" class="d-flex ms-3">
+                <input type="text" name="titulo" id="titulo" class="form-control me-2" placeholder="Buscar receta por título" required>
+                <button type="submit" class="btn btn-outline-primary">Buscar</button>
+            </form>
+            <button class="btn btn-warning ms-3">Subscríbete</button>
+            <!-- Ícono de usuario para redirigir al Dashboard con margen adicional -->
+            <a class="nav-link ms-3" href="..\vistas\dashboard_login_crud.php">
+                <img src="..\assets\images\imagenes\Iconos\profile-user.png" alt="Usuario" style="width: 24px; height: 24px;">
+            </a>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     <!-- Contenedor con imagen de fondo -->
     <div class="bg-image" style="background-image: url('../assets/images/imagenes/food4k.jpg'); height: 100vh;">
