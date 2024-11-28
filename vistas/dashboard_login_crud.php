@@ -42,14 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $rol = $_POST['id_rol'];
             $nueva_contrasena = $_POST['nueva_contrasena'];
     
-            // Verifica si se proporcionó una nueva contraseña
             if (!empty($nueva_contrasena)) {
-                // Si se proporcionó nueva contraseña, la hashea y la actualiza
-                $nueva_contrasena = password_hash($nueva_contrasena, PASSWORD_DEFAULT);
+                // Ahora almacenamos la nueva contraseña en texto plano
                 $stmt = $conn->prepare("UPDATE usuarios SET nombre_usuario = ?, correo = ?, puntos = ?, id_rol = ?, password = ? WHERE id_usuario = ?");
-                $stmt->bind_param('ssisss', $nombre, $correo, $puntos, $rol, $nueva_contrasena, $id);
+                $stmt->bind_param('ssisss', $nombre, $correo, $puntos, $rol, $nueva_contrasena, $id); // 's' para la contraseña en texto plano
             } else {
-                // Si no se proporciona nueva contraseña, no la actualiza
+                // Si no se proporciona nueva contraseña, solo actualizamos los otros campos
                 $stmt = $conn->prepare("UPDATE usuarios SET nombre_usuario = ?, correo = ?, puntos = ?, id_rol = ? WHERE id_usuario = ?");
                 $stmt->bind_param('ssisi', $nombre, $correo, $puntos, $rol, $id);
             }
@@ -57,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
         }
     }
+    
     
 }
 
@@ -80,6 +79,36 @@ if ($id_rol_session == 1) {
     <link rel="stylesheet" href="../assets/librerias/estilos_crud.css">
 </head>
 <body>
+    <!-- Nueva Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">A Cocinar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plantilla.php">Recetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tips.php">Tips de cocina</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
+                    </li>
+                    <!-- Nuevo botón para redirigir al Dashboard -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white" href="..\vistas\dashboard_login_crud.php">Dashboard</a>
+                    </li>
+                </ul>
+                <button class="btn btn-warning ms-3">Subscríbete</button>
+            </div>
+        </div>
+    </nav>
     <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre_usuario']); ?></h2>
     <a href="logout.php">Cerrar Sesión</a>
     
@@ -159,5 +188,15 @@ if ($id_rol_session == 1) {
 </tbody>
 
     </table>
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2024 A Cocinar. Todos los derechos reservados.</p>
+        <p>Síguenos en nuestras redes sociales</p>
+        <div class="social-icons">
+            <img src="..\assets\images\imagenes\Iconos\face.png" alt="Facebook">
+            <img src="..\assets\images\imagenes\Iconos\insta.png" alt="Instagram">
+            <img src="..\assets\images\imagenes\Iconos\twitter.png" alt="YouTube">
+        </div>
+    </footer>
 </body>
 </html>
