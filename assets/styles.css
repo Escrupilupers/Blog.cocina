@@ -22,22 +22,17 @@
 
 /* Galería de imágenes superpuestas */
 .image-gallery {
-    display: flex; /* Usar flexbox para una distribución más responsiva */
-    flex-wrap: wrap; /* Permite que las imágenes se ajusten en líneas */
-    justify-content: center; /* Centra las imágenes dentro del contenedor */
-    position: relative; /* Cambiado de absolute a relative */
+    position: absolute;
     top: 70%; /* Ajusta esta medida según necesites */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10; /* Para que quede sobre los contenedores */
-    gap: 15px; /* Espacio entre las imágenes */
 }
 
 .image-gallery img {
-    max-width: 100%; /* Asegura que no se desborden */
-    height: auto; /* Mantiene la proporción */
-    width: 150px; /* Tamaño máximo para las imágenes */
-    margin: 0; /* Eliminar márgenes extra */
+    width: 150px;
+    height: 150px;
+    margin: 0 10px;
     border-radius: 10px;
 }
 
@@ -57,20 +52,8 @@
     background-color: rgba(128, 128, 128, 0.6); /* Gris con 60% de transparencia */
 }
 
-/* Medios de consulta para dispositivos más pequeños */
-@media (max-width: 768px) {
-    .image-gallery img {
-        width: 120px; /* Ajusta el tamaño para pantallas pequeñas */
-    }
-
-    /* Ajustar otras secciones si es necesario */
-    .social-icons img {
-        width: 20px; /* Reducir los iconos de redes sociales */
-    }
-}
-
-@media (max-width: 480px) {
-    .image-gallery img {
-        width: 100px; /* Más pequeño para dispositivos muy pequeños */
-    }
+/* Estilos del footer */
+.social-icons img {
+    width: 24px;
+    margin: 0 10px;
 }
