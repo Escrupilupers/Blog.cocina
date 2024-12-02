@@ -44,24 +44,20 @@
     <?php 
     include '../config/Conexion.php'; 
 
-    // Verificar conexión
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    // Obtener el id_receta de la URL
     if (isset($_GET['id_receta'])) {
-        $id_receta = intval($_GET['id_receta']); // Convertir el id a un valor entero
+        $id_receta = intval($_GET['id_receta']);
     } else {
         header('Location: index.php');
         exit();
     }
 
-    // Suponiendo que el usuario ya ha iniciado sesión
-    $id_usuario = 1; // Reemplazar con el ID del usuario autenticado
+    $id_usuario = 1; 
     ?>
 
-    <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.php">A Cocinar</a>
@@ -90,7 +86,6 @@
 
     <section class="container my-5">
         <?php
-        // Obtener receta y su imagen
         $sql = "
             SELECT r.id_receta, r.titulo, i.ruta_imagen 
             FROM recetas AS r
@@ -98,16 +93,11 @@
             WHERE r.id_receta = $id_receta
         ";
         $result = $conn->query($sql);
-        if ($result === false) {
-            die("Error en la consulta de recetas: " . $conn->error);
-        }
-
-        if ($result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
             echo "<h2>" . htmlspecialchars($row["titulo"]) . "</h2>"; 
             echo "<img src='" . htmlspecialchars($row["ruta_imagen"]) . "' alt='Imagen de " . htmlspecialchars($row["titulo"]) . "' class='img-fluid mb-3'>";
 
-            // Ingredientes
             $sql_ingredientes = "
                 SELECT i.nombre_ingrediente 
                 FROM receta_ingredientes ri 
@@ -120,7 +110,6 @@
             }
             echo "</ul>";
 
-            // Calificación promedio
             $sql_valoracion = "
                 SELECT AVG(calificacion) AS promedio_calificacion 
                 FROM valoraciones 
@@ -132,7 +121,6 @@
                 $promedio_calificacion = round($row_valoracion['promedio_calificacion']);
             }
 
-            // Mostrar estrellas y permitir interacción
             echo "<h4>Calificación promedio:</h4>";
             echo "<div class='rating' id='rating-section'>";
             for ($i = 1; $i <= 5; $i++) {
@@ -145,6 +133,28 @@
             echo "<p>No hay detalles disponibles para esta receta.</p>";
         }
         ?>
+
+        <!-- Mostrar mensajes generados por el trigger -->
+        <h4>Mensajes:</h4>
+        <?php
+        $sql_mensajes = "
+            SELECT contenido, fecha 
+            FROM mensajes 
+            WHERE id_usuario = $id_usuario 
+            ORDER BY fecha DESC";
+        $result_mensajes = $conn->query($sql_mensajes);
+
+        if ($result_mensajes && $result_mensajes->num_rows > 0) {
+            echo "<ul>";
+            while ($mensaje = $result_mensajes->fetch_assoc()) {
+                echo "<li><strong>" . htmlspecialchars($mensaje['contenido']) . "</strong> <em>(" . htmlspecialchars($mensaje['fecha']) . ")</em></li>";
+            }
+            echo "</ul>";
+        } else {
+            echo "<p>No tienes mensajes en este momento.</p>";
+        }
+        ?>
+
         <a href="index.php" class="btn btn-primary">Volver a la página principal</a>
     </section>
 
@@ -153,42 +163,58 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const stars = document.querySelectorAll(".star");
-            const ratingMessage = document.getElementById("rating-message");
-            const idReceta = <?php echo json_encode($id_receta); ?>;
+document.addEventListener("DOMContentLoaded", () => {
+    const stars = document.querySelectorAll(".star");
+    const ratingMessage = document.getElementById("rating-message");
+    const idReceta = <?php echo json_encode($id_receta); ?>;
 
-            stars.forEach(star => {
-                star.addEventListener("click", () => {
-                    const rating = star.getAttribute("data-value");
+    stars.forEach(star => {
+        star.addEventListener("click", () => {
+            const rating = star.getAttribute("data-value");
 
-                    // Visualización de estrellas
-                    stars.forEach(s => s.classList.remove("filled", "unfilled"));
-                    stars.forEach((s, index) => {
-                        s.classList.add(index < rating ? "filled" : "unfilled");
-                    });
+            stars.forEach((s, index) => {
+                s.classList.toggle("filled", index < rating);
+                s.classList.toggle("unfilled", index >= rating);
+            });
 
-                    // Enviar calificación al servidor
-                    fetch('guardar_calificacion.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id_receta: idReceta, calificacion: rating })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            ratingMessage.textContent = "¡Gracias por tu calificación!";
-                        } else {
-                            ratingMessage.textContent = "Error al guardar tu calificación.";
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        ratingMessage.textContent = "Error al procesar la solicitud.";
-                    });
-                });
+            // Enviar la calificación al servidor
+            fetch('guardar_calificacion.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id_receta: idReceta, calificacion: rating })
+            })
+            .then(response => response.json())
+            .then(data => {
+                ratingMessage.textContent = data.success
+                    ? "¡Gracias por tu calificación!"
+                    : "Error al guardar tu calificación.";
+
+                // Actualizar la calificación promedio
+                actualizarPromedioCalificacion(idReceta);
+            })
+            .catch(() => {
+                ratingMessage.textContent = "Error al procesar la solicitud.";
             });
         });
+    });
+
+    // Función para actualizar la calificación promedio en la página
+    function actualizarPromedioCalificacion(idReceta) {
+        fetch(`obtener_promedio_calificacion.php?id_receta=${idReceta}`)
+            .then(response => response.json())
+            .then(data => {
+                const promedio = data.promedio_calificacion;
+                const ratingSection = document.getElementById("rating-section");
+                const stars = ratingSection.querySelectorAll(".star");
+
+                stars.forEach((star, index) => {
+                    star.classList.toggle("filled", index < promedio);
+                    star.classList.toggle("unfilled", index >= promedio);
+                });
+            });
+    }
+});
+
     </script>
 </body>
 </html>
