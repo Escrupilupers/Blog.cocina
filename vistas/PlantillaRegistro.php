@@ -166,18 +166,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const stars = document.querySelectorAll(".star");
     const ratingMessage = document.getElementById("rating-message");
+    const ratingSection = document.getElementById("rating-section");
     const idReceta = <?php echo json_encode($id_receta); ?>;
 
     stars.forEach(star => {
         star.addEventListener("click", () => {
             const rating = star.getAttribute("data-value");
 
-            stars.forEach((s, index) => {
-                s.classList.toggle("filled", index < rating);
-                s.classList.toggle("unfilled", index >= rating);
-            });
-
-            // Enviar la calificación al servidor
             fetch('guardar_calificacion.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -185,35 +180,27 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.json())
             .then(data => {
-                ratingMessage.textContent = data.success
-                    ? "¡Gracias por tu calificación!"
-                    : "Error al guardar tu calificación.";
+                if (data.success) {
+                    ratingMessage.textContent = "¡Gracias por tu calificación!";
 
-                // Actualizar la calificación promedio
-                actualizarPromedioCalificacion(idReceta);
+                    // Actualizar las estrellas basándose en el nuevo promedio
+                    const promedio = data.promedio_calificacion;
+                    stars.forEach((s, index) => {
+                        s.classList.toggle('filled', index < promedio);
+                        s.classList.toggle('unfilled', index >= promedio);
+                    });
+                } else {
+                    ratingMessage.textContent = data.message || "Error al guardar la calificación.";
+                }
             })
-            .catch(() => {
+            .catch(error => {
                 ratingMessage.textContent = "Error al procesar la solicitud.";
+                console.error("Error:", error);
             });
         });
     });
-
-    // Función para actualizar la calificación promedio en la página
-    function actualizarPromedioCalificacion(idReceta) {
-        fetch(`obtener_promedio_calificacion.php?id_receta=${idReceta}`)
-            .then(response => response.json())
-            .then(data => {
-                const promedio = data.promedio_calificacion;
-                const ratingSection = document.getElementById("rating-section");
-                const stars = ratingSection.querySelectorAll(".star");
-
-                stars.forEach((star, index) => {
-                    star.classList.toggle("filled", index < promedio);
-                    star.classList.toggle("unfilled", index >= promedio);
-                });
-            });
-    }
 });
+
 
     </script>
 </body>

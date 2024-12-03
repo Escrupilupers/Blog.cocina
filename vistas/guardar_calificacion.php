@@ -1,11 +1,22 @@
 <?php
+session_start();
 include '../config/Conexion.php';
+
+// Verificar si el usuario está autenticado
+if (!isset($_SESSION['id_usuario'])) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Debes iniciar sesión para calificar.',
+        'debug' => 'No hay sesión activa'
+    ]);
+    exit;
+}
 
 // Obtener datos enviados
 $data = json_decode(file_get_contents("php://input"), true);
 $id_receta = intval($data['id_receta']);
 $calificacion = intval($data['calificacion']);
-$id_usuario = 1; // Cambia esto al ID del usuario autenticado
+$id_usuario = $_SESSION['id_usuario']; // ID del usuario autenticado desde la sesión
 
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'message' => 'Error de conexión a la base de datos.']);
@@ -37,13 +48,6 @@ if ($stmt_check->num_rows > 0) {
 
     $stmt_update->bind_param("iii", $calificacion, $id_receta, $id_usuario);
     $success = $stmt_update->execute();
-
-    echo json_encode([
-        'success' => $success,
-        'message' => $success ? 'Calificación actualizada correctamente.' : 'Error al actualizar la calificación.',
-        'debug' => $stmt_update->error // Mostrar errores
-    ]);
-
     $stmt_update->close();
 } else {
     // Insertar una nueva calificación
@@ -57,16 +61,35 @@ if ($stmt_check->num_rows > 0) {
 
     $stmt_insert->bind_param("iii", $id_receta, $id_usuario, $calificacion);
     $success = $stmt_insert->execute();
-
-    echo json_encode([
-        'success' => $success,
-        'message' => $success ? 'Calificación guardada correctamente.' : 'Error al guardar la calificación.',
-        'debug' => $stmt_insert->error // Mostrar errores
-    ]);
-
     $stmt_insert->close();
 }
 
 $stmt_check->close();
+
+// Calcular el nuevo promedio
+$sql_promedio = "SELECT AVG(calificacion) AS promedio_calificacion FROM valoraciones WHERE id_receta = ?";
+$stmt_promedio = $conn->prepare($sql_promedio);
+
+if (!$stmt_promedio) {
+    echo json_encode(['success' => false, 'message' => 'Error al calcular el promedio.', 'error' => $conn->error]);
+    exit;
+}
+
+$stmt_promedio->bind_param("i", $id_receta);
+$stmt_promedio->execute();
+$result_promedio = $stmt_promedio->get_result();
+
+if ($result_promedio && $row = $result_promedio->fetch_assoc()) {
+    $promedio_calificacion = round($row['promedio_calificacion']);
+    echo json_encode([
+        'success' => true,
+        'message' => $success ? 'Calificación guardada correctamente.' : 'Error al guardar la calificación.',
+        'promedio_calificacion' => $promedio_calificacion
+    ]);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Error al calcular el promedio.']);
+}
+
+$stmt_promedio->close();
 $conn->close();
 ?>
