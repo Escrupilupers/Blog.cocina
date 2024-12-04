@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         star.addEventListener("click", () => {
             const rating = star.getAttribute("data-value");
 
-            fetch('guardar_calificacion.php', {
+            fetch('..\controlador\guardar_calificacion.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id_receta: idReceta, calificacion: rating })

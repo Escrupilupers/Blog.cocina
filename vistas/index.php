@@ -115,7 +115,7 @@
                 </li>
             </ul>
             <!-- Buscador -->
-            <form method="GET" action="buscar_recetas.php" class="d-flex ms-3">
+            <form method="GET" action="..\modelos\buscar_recetas_autocompletar.php" class="d-flex ms-3">
                 <input type="text" name="titulo" id="titulo" class="form-control me-2" placeholder="Buscar receta por título" required>
                 <button type="submit" class="btn btn-outline-primary">Buscar</button>
             </form>

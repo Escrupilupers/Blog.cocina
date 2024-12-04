@@ -110,7 +110,7 @@ if ($id_rol_session == 1) {
         </div>
     </nav>
     <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre_usuario']); ?></h2>
-    <a href="logout.php">Cerrar Sesión</a>
+    <a href="..\controlador\logout.php">Cerrar Sesión</a>
     
     <!-- Menú de navegación -->
     <nav>
