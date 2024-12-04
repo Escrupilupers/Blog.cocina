@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['id_usuario'])) {
-    header('Location: login.php');
+    header('Location: ..\controlador\login.php');
     exit();
 }
 
@@ -133,20 +133,20 @@ if ($id_rol_session == 1) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Home</a>
+                        <a class="nav-link active" href="..\vistas\index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="plantilla.php">Recetas</a>
+                        <a class="nav-link" href="..\vistas\plantilla.php">Recetas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="tips.php">Tips de cocina</a>
+                        <a class="nav-link" href="..\vistas\tips.php">Tips de cocina</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre nosotros</a>
+                        <a class="nav-link" href="..\vistas\sobre-nosotros.php">Sobre nosotros</a>
                     </li>
                     <!-- Nuevo botón para redirigir al Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white" href="..\vistas\dashboard_login_crud.php">Dashboard</a>
+                        <a class="nav-link btn btn-primary text-white" href="..\modelos\dashboard_login_crud.php">Dashboard</a>
                     </li>
                 </ul>
                 <button class="btn btn-warning ms-3">Subscríbete</button>

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrarse'])) {
             // Ejecutar la consulta
             if ($stmt->execute()) {
                 // Redirigir al login o a una página de éxito
-                header('Location: login.php'); // Cambiar por la ruta de tu login
+                header('Location: ..\controlador\login.php'); // Cambiar por la ruta de tu login
                 exit();
             } else {
                 $error = "Error al registrar el usuario: " . $stmt->error;

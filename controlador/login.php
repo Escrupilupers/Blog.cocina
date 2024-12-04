@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     $_SESSION['id_rol'] = $fila['id_rol'];
 
                     // Redirigir al dashboard
-                    header('Location: index.php');
+                    header('Location: ..\modelos\dashboard_login_crud.php');
                     exit();
                 } else {
                     $error = "Contraseña incorrecta.";

@@ -121,7 +121,7 @@
             </form>
             <button class="btn btn-warning ms-3">Subscríbete</button>
             <!-- Ícono de usuario para redirigir al Dashboard con margen adicional -->
-            <a class="nav-link ms-3" href="..\vistas\dashboard_login_crud.php">
+            <a class="nav-link ms-3" href="..\modelos\dashboard_login_crud.php">
                 <img src="..\assets\images\imagenes\Iconos\profile-user.png" alt="Usuario" style="width: 24px; height: 24px;">
             </a>
         </div>
